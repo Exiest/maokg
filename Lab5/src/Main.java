@@ -24,14 +24,14 @@ public class Main extends JFrame implements ActionListener, KeyListener {
     private final static String modelLocation = "BEE.OBJ";
     private final BranchGroup root = new BranchGroup();
     private final Canvas3D canvas = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
-    private final TransformGroup trexGroup = new TransformGroup();
+    private final TransformGroup beeGroup = new TransformGroup();
     private final Transform3D transform3D = new Transform3D();
     private final Transform3D rotateTransformX = new Transform3D();
     private final Transform3D rotateTransformY = new Transform3D();
     private final Transform3D rotateTransformZ = new Transform3D();
     private final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     private SimpleUniverse universe;
-    private Scene trex;
+    private Scene bee;
     private Background background;
     private Map<String, Shape3D> nameMap;
 
@@ -65,7 +65,7 @@ public class Main extends JFrame implements ActionListener, KeyListener {
     private void setInitialLocation() {
         transform3D.setTranslation(new Vector3f(x_location_current, 0, 0));
         transform3D.setScale(scale_cur);
-        trexGroup.setTransform(transform3D);
+        beeGroup.setTransform(transform3D);
     }
 
     private void initialize() throws IOException {
@@ -81,7 +81,7 @@ public class Main extends JFrame implements ActionListener, KeyListener {
         universe.getViewingPlatform().setNominalViewingTransform();
 
         canvas.addKeyListener(this);
-        trex = getSceneFromFile();
+        bee = getSceneFromFile();
     }
 
     private void addLight() {
@@ -123,10 +123,10 @@ public class Main extends JFrame implements ActionListener, KeyListener {
     }
 
     private void addTexture() throws IOException {
-        nameMap = trex.getNamedObjects();
-        trexGroup.addChild(trex.getSceneGroup());
-        trexGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        root.addChild(trexGroup);
+        nameMap = bee.getNamedObjects();
+        beeGroup.addChild(bee.getSceneGroup());
+        beeGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        root.addChild(beeGroup);
 
     }
 
@@ -172,39 +172,39 @@ public class Main extends JFrame implements ActionListener, KeyListener {
                 scale_cur -= 0.005;
                 transform3D.setTranslation(new Vector3f(x_location_current, y_location_current, z_location_current));
                 transform3D.setScale(scale_cur);
-                trexGroup.setTransform(transform3D);
+                beeGroup.setTransform(transform3D);
             } break;
             case KeyEvent.VK_DOWN: {
                 x_location_current -= 0.05;
                 scale_cur += 0.005;
                 transform3D.setTranslation(new Vector3f(x_location_current, y_location_current, z_location_current));
                 transform3D.setScale(scale_cur);
-                trexGroup.setTransform(transform3D);
+                beeGroup.setTransform(transform3D);
             } break;
             case KeyEvent.VK_LEFT: {
                 z_location_current -= 0.05;
                 transform3D.setTranslation(new Vector3f(x_location_current, y_location_current, z_location_current));
-                trexGroup.setTransform(transform3D);
+                beeGroup.setTransform(transform3D);
             } break;
             case KeyEvent.VK_RIGHT: {
                 z_location_current += 0.05;
                 transform3D.setTranslation(new Vector3f(x_location_current, y_location_current, z_location_current));
-                trexGroup.setTransform(transform3D);
+                beeGroup.setTransform(transform3D);
             } break;
             case KeyEvent.VK_X: {
                 rotateTransformX.rotX(diff);
                 transform3D.mul(rotateTransformX);
-                trexGroup.setTransform(transform3D);
+                beeGroup.setTransform(transform3D);
             } break;
             case KeyEvent.VK_Y: {
                 rotateTransformY.rotY(diff);
                 transform3D.mul(rotateTransformY);
-                trexGroup.setTransform(transform3D);
+                beeGroup.setTransform(transform3D);
             } break;
             case KeyEvent.VK_Z: {
                 rotateTransformZ.rotZ(diff);
                 transform3D.mul(rotateTransformZ);
-                trexGroup.setTransform(transform3D);
+                beeGroup.setTransform(transform3D);
             } break;
         }
     }
