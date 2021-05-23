@@ -68,13 +68,13 @@ public class Engine extends Applet implements ActionListener {
         return root;
     }
 
-    private TransformGroup getWheel(float x, float y, float z, Color color) {
+    private TransformGroup getWheel(float x, float y, float z, Appearance a) {
         TransformGroup wheel = new TransformGroup();
         Transform3D t = new Transform3D();
         Transform3D x1 = new Transform3D();
         x1.rotX(Math.PI / 2);
         t.mul(x1);
-        Cylinder cylinder = EngineBody.getCylinder(0.1f, 0.05f, color);
+        Cylinder cylinder = EngineBody.getCylinder(0.1f, 0.05f, a);
         Vector3f vector = new Vector3f(x, y, z);
         t.setTranslation(vector);
         wheel.setTransform(t);
@@ -82,13 +82,13 @@ public class Engine extends Applet implements ActionListener {
         return wheel;
     }
 
-    private TransformGroup getBigWheel(float x, float y, float z, Color color) {
+    private TransformGroup getBigWheel(float x, float y, float z, Appearance a) {
         TransformGroup wheel = new TransformGroup();
         Transform3D t = new Transform3D();
         Transform3D x1 = new Transform3D();
         x1.rotX(Math.PI / 2);
         t.mul(x1);
-        Cylinder cylinder = EngineBody.getCylinder(0.13f, 0.05f, color);
+        Cylinder cylinder = EngineBody.getCylinder(0.13f, 0.05f, a);
         Vector3f vector = new Vector3f(x, y, z);
         t.setTranslation(vector);
         wheel.setTransform(t);
@@ -98,13 +98,46 @@ public class Engine extends Applet implements ActionListener {
 
     private void buildEngine() {
 
+        TextureLoader loader1 = new TextureLoader("./assets/texture.jpg", new Container());
+
+        Texture texture1 = loader1.getTexture();
+        texture1.setBoundaryModeS(Texture.WRAP);
+        texture1.setBoundaryModeT(Texture.WRAP);
+        texture1.setBoundaryColor(new Color4f(0.0f, 1.0f, 1.0f, 0.0f));
+
+        TextureAttributes texAttr1 = new TextureAttributes();
+        texAttr1.setTextureMode(TextureAttributes.REPLACE);
+
+        TextureLoader loader2 = new TextureLoader("./assets/texture2.jpg", "LUMINANCE", new Container());
+
+        Texture texture2 = loader2.getTexture();
+        texture2.setBoundaryModeS(Texture.WRAP);
+        texture2.setBoundaryModeT(Texture.WRAP);
+        texture2.setBoundaryColor(new Color4f(0.0f, 1.0f, 1.0f, 0.0f));
+
+        TextureLoader loader3 = new TextureLoader("./assets/wheel.png", "LUMINANCE", new Container());
+
+        Texture texture3 = loader3.getTexture();
+        texture3.setBoundaryModeS(Texture.WRAP);
+        texture3.setBoundaryModeT(Texture.WRAP);
+        texture3.setBoundaryColor(new Color4f(0.0f, 0.0f, 0.0f, 0.0f));
+
+        Appearance a1 = new Appearance();
+        a1.setTexture(texture1);
+
+        Appearance a2 = new Appearance();
+        a2.setTexture(texture2);
+
+        Appearance a3 = new Appearance();
+        a3.setTexture(texture3);
+
         TransformGroup corps = new TransformGroup();
         Transform3D t1 = new Transform3D();
         Transform3D y1 = new Transform3D();
         y1.rotZ(Math.PI / 2);
         t1.rotX(Math.PI / 2);
         t1.mul(y1);
-        Cylinder cylinder = EngineBody.getCylinder(0.15f, 0.7f, Color.CYAN);
+        Cylinder cylinder = EngineBody.getCylinder(0.15f, 0.7f, a1);
         Vector3f vector = new Vector3f(0f, .0f, 0f);
         t1.setTranslation(vector);
         corps.setTransform(t1);
@@ -113,7 +146,7 @@ public class Engine extends Applet implements ActionListener {
 
         TransformGroup chimney = new TransformGroup();
         Transform3D t3 = new Transform3D();
-        Cylinder cylinder3 = EngineBody.getCylinder(0.1f, 0.2f, Color.YELLOW);
+        Cylinder cylinder3 = EngineBody.getCylinder(0.1f, 0.2f, a1);
         Vector3f vector3 = new Vector3f(0f, 0.2f, 0f);
         t3.setTranslation(vector3);
         chimney.setTransform(t3);
@@ -122,7 +155,7 @@ public class Engine extends Applet implements ActionListener {
 
         TransformGroup cabin = new TransformGroup();
         Transform3D t4 = new Transform3D();
-        Box box1 = EngineBody.getBox(0.22f, 0.22f, 0.15f, Color.MAGENTA);
+        Box box1 = EngineBody.getBox(0.22f, 0.22f, 0.15f, a2);
         Vector3f vector4 = new Vector3f(0.5f, 0.08f, 0f);
         t4.setTranslation(vector4);
         cabin.setTransform(t4);
@@ -131,25 +164,25 @@ public class Engine extends Applet implements ActionListener {
 
         TransformGroup plate1 = new TransformGroup();
         Transform3D t5 = new Transform3D();
-        Box box2 = EngineBody.getBox(0.55f, 0.04f, 0.15f, Color.BLUE);
+        Box box2 = EngineBody.getBox(0.55f, 0.04f, 0.15f, a2);
         Vector3f vector5 = new Vector3f(0.15f, -0.17f, 0f);
         t5.setTranslation(vector5);
         plate1.setTransform(t5);
         plate1.addChild(box2);
         engineTG.addChild(plate1);
 
-        TransformGroup wheel1 = getWheel(-0.25f, -0.2f, -0.2f, Color.BLACK);
+        TransformGroup wheel1 = getWheel(-0.25f, -0.2f, -0.2f, a3);
         engineTG.addChild(wheel1);
-        TransformGroup wheel2 = getWheel(0.1f, -0.2f, -0.2f, Color.BLACK);
+        TransformGroup wheel2 = getWheel(0.1f, -0.2f, -0.2f, a3);
         engineTG.addChild(wheel2);
-        TransformGroup wheel4 = getBigWheel(0.5f, -0.17f, -0.2f, Color.BLACK);
+        TransformGroup wheel4 = getBigWheel(0.5f, -0.17f, -0.2f, a3);
         engineTG.addChild(wheel4);
 
-        TransformGroup wheel5 = getWheel(-0.25f, -0.2f, 0.2f, Color.BLACK);
+        TransformGroup wheel5 = getWheel(-0.25f, -0.2f, 0.2f, a3);
         engineTG.addChild(wheel5);
-        TransformGroup wheel6 = getWheel(0.1f, -0.2f, 0.2f, Color.BLACK);
+        TransformGroup wheel6 = getWheel(0.1f, -0.2f, 0.2f, a3);
         engineTG.addChild(wheel6);
-        TransformGroup wheel8 = getBigWheel(0.5f, -0.17f, 0.2f, Color.BLACK);
+        TransformGroup wheel8 = getBigWheel(0.5f, -0.17f, 0.2f, a3);
         engineTG.addChild(wheel8);
 
         TransformGroup con = new TransformGroup();
@@ -158,7 +191,7 @@ public class Engine extends Applet implements ActionListener {
         y2.rotZ(Math.PI / 2);
         t2.rotX(Math.PI / 2);
         t2.mul(y2);
-        Cone cone1 = EngineBody.getCone(0.2f, 0.15f, Color.PINK);
+        Cone cone1 = EngineBody.getCone(0.2f, 0.15f, a1);
         Vector3f vector2 = new Vector3f(-0.45f, 0f, 0f);
         t2.setTranslation(vector2);
         con.setTransform(t2);

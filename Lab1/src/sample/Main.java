@@ -33,6 +33,8 @@ public class Main extends Application {
         Polyline mice = new Polyline(new double[]{
                 20.0, 20.0, 84.0, 222.0, 313.0, 222.0, 370.0, 19.0
         });
+        
+        
         root.getChildren().add(mice);
         mice.setStroke(Color.RED);
         mice.setStrokeWidth(7.0);
